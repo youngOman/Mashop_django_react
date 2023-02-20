@@ -3,9 +3,10 @@ import Footer from "./components/Footer";
 import { Container } from "react-bootstrap";
 // React-router-dom
 import { BrowserRouter,Routes,Route } from "react-router-dom";
-// Pages
+// Pages import 有default的 export 不用加 { }
 import HomePage from "./Pages/HomePage";
 import ProductPage from "./Pages/ProductPage";
+import CartPage from "./Pages/CartPage";
 
 function App() {
   return (
@@ -17,6 +18,8 @@ function App() {
             <Routes>
               <Route path="/" element={<HomePage/>} />
               <Route path="/product/:id" element={<ProductPage/>} />
+              <Route path="/cart/:productId?" element={<CartPage/>} />
+
             </Routes>
             
 

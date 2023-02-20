@@ -22,7 +22,6 @@ export const listProducts = () => async(dispatch) => {
             ? error.response.data.message 
             : error.message}) // 檢查若 error.response && error.response.data.message 存在就回傳 error.response.data.message 否則就用預設的error.message
     }
-    
 }
 
 export const listProductDetail = (id) => async(dispatch) => {
