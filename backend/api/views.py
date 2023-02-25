@@ -1,9 +1,10 @@
 # from django.shortcuts import render
 # from django.http import JsonResponse
 from .products import products
-from .models import Product
+from .models import Product,User
 # DRF
-from rest_framework.decorators import api_view
+from rest_framework.decorators import api_view,permission_classes
+from rest_framework.permissions import IsAuthenticated,IsAdminUser
 from rest_framework.response import Response
 from .serializer import ProductSerializer,UserSerializer,UserSerializerWithToken
 # JWT
@@ -32,10 +33,21 @@ class MytokenObtainPairView(TokenObtainPairView):
 
 
 @api_view(['GET']) # 取單個 User
+@permission_classes([IsAuthenticated]) # 只有登入的人才能 access
 def getUserProfile(request):
     user = request.user
     serializer = UserSerializer(user,many=False)
     return Response(serializer.data)
+
+
+@api_view(['GET']) # 取所有 User
+@permission_classes([IsAdminUser]) # 只有登入的人才能 access
+def getUsers(request):
+    users = User.objects.all()
+    serializer = UserSerializer(users,many=True)
+    return Response(serializer.data)
+
+
 
 @api_view(['GET'])
 def getProducts(request):
