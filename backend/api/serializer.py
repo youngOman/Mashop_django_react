@@ -4,6 +4,7 @@ from rest_framework import serializers
 from rest_framework_simplejwt.tokens import RefreshToken
 from rest_framework.permissions import IsAuthenticated,IsAdminUser
 
+# 這個 class是負責產生"登入"的token
 class UserSerializer(serializers.ModelSerializer):
     first_name = serializers.SerializerMethodField(read_only=True) # 這個欄位不會存到資料庫，只是用來顯示
     isAdmin = serializers.SerializerMethodField(read_only=True)
@@ -20,7 +21,7 @@ class UserSerializer(serializers.ModelSerializer):
             first_name = obj.email.split('@')[0]
         return first_name
 
-# 分兩個class寫，這個class是負責產生第一次註冊或重設密碼的新token
+# 分兩個class寫，這個class是負責產生第一次"註冊"或"重設密碼"的新token
 class UserSerializerWithToken(UserSerializer): # 繼承UserSerializer 就不用重複寫欄位 
     token = serializers.SerializerMethodField(read_only=True)
     class Meta:
