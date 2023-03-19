@@ -83,7 +83,7 @@ DATABASES = {
         'NAME': 'maShop',
         'USER':'www',
         'PASSWORD':'Buty_2350973',
-        'HOST':'yang.butyshop.com',
+        'HOST':'61.218.242.50',
         'PORT':'3306',
         'OPTIONS':{
         'init_command':"SET sql_mode='STRICT_TRANS_TABLES'"  
@@ -160,10 +160,6 @@ REST_FRAMEWORK = {
         'rest_framework_simplejwt.authentication.JWTAuthentication',
     )
 }
-
-# Django project settings.py
-
-
 
 SIMPLE_JWT = {
     "ACCESS_TOKEN_LIFETIME": timedelta(days=30),
