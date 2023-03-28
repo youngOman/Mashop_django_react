@@ -7,6 +7,9 @@ import { BrowserRouter,Routes,Route } from "react-router-dom";
 import HomePage from "./Pages/HomePage";
 import ProductPage from "./Pages/ProductPage";
 import CartPage from "./Pages/CartPage";
+import LoginPage from "./Pages/LoginPage";
+import RegisterPage from "./Pages/RegisterPage";
+import ProfilePage from "./Pages/ProfilePage";
 
 function App() {
   return (
@@ -17,6 +20,10 @@ function App() {
           <Container>
             <Routes>
               <Route path="/" element={<HomePage/>} />
+              <Route path="/login" element={<LoginPage/>} />
+              <Route path="/register" element={<RegisterPage/>} />
+              <Route path="/profile" element={<ProfilePage/>} />
+
               <Route path="/product/:id" element={<ProductPage/>} />
               <Route path="/cart/:productId?" element={<CartPage/>} />
 
