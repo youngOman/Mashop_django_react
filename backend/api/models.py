@@ -5,7 +5,7 @@ from django.contrib.auth.models import User
 class Product(models.Model):
     user = models.ForeignKey(User,on_delete=models.SET_NULL,null=True) # SET_NULL 當User被刪除，不要刪除此User新增的產品，null=True 產品可以是在沒有指定User的情況下產生
     name = models.CharField(max_length=200,null=True,blank=True) # null=True 欄位可以是空值,blank=True 可以不填name
-    image = models.ImageField(null=True,blank=True)
+    image = models.ImageField(null=True,blank=True,default='/placeholder.png') # blank=True 可以不填name
     brand = models.CharField(max_length=200,null=True,blank=True) # blank=True 可以不填name
     category = models.CharField(max_length=200,null=True,blank=True) # blank=True 可以不填name
     description = models.TextField(max_length=200,null=True,blank=True) # blank=True 可以不填name
@@ -36,11 +36,11 @@ class Order(models.Model):
     paymentMethod = models.CharField(max_length=200, null=True, blank=True)
     taxPrice = models.DecimalField(max_digits=7, decimal_places=2, null=True, blank=True)
     shippingPrice = models.DecimalField(max_digits=7, decimal_places=2, null=True, blank=True)
-    totalPrice = models.DecimalField(max_digits=7, decimal_places=2, null=True, blank=True)
+    totalPrice = models.DecimalField(max_digits=10, decimal_places=2, null=True, blank=True)
     isPaid = models.BooleanField(default=False)
     paidAt = models.DateTimeField(auto_now_add=False, null=True, blank=True) # auto_now_add=False 不要動他直到我手動去改變他的資料
     isDelivered = models.BooleanField(default=False)
-    deliveredAt = models.DateTimeField(auto_now_add=False, null=True, blank=True) # auto_now_add=False 不要動他直到我手動去改變他的資料
+    deliveredAt = models.DateTimeField(auto_now_add=False, null=True, blank=True)
     createdAt = models.DateTimeField(auto_now_add=True)
     # _id = models.AutoField(primary_key=True, editable=False)
 
@@ -53,7 +53,7 @@ class OrderItem(models.Model):
     order = models.ForeignKey(Order, on_delete=models.SET_NULL, null=True)
     name = models.CharField(max_length=200, null=True, blank=True)
     qty = models.IntegerField(null=True, blank=True, default=0)
-    price = models.DecimalField(max_digits=7, decimal_places=2, null=True, blank=True)
+    price = models.IntegerField(null=True, blank=True)
     image = models.CharField(max_length=200, null=True, blank=True)
     # _id = models.AutoField(primary_key=True, editable=False)
 

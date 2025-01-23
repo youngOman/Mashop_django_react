@@ -83,7 +83,7 @@ DATABASES = {
         'NAME': 'maShop',
         'USER':'www',
         'PASSWORD':'Buty_2350973',
-        'HOST':'61.218.242.50',
+        'HOST':'192.168.1.101',
         'PORT':'3306',
         'OPTIONS':{
         'init_command':"SET sql_mode='STRICT_TRANS_TABLES'"  

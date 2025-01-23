@@ -40,7 +40,7 @@ class MyTokenObtainPairSerializer(TokenObtainPairSerializer): # 這是負責產�
 class MytokenObtainPairView(TokenObtainPairView): 
     serializer_class = MyTokenObtainPairSerializer 
 
-@api_view(['PUT']) # 更新自己的 profile
+@api_view(['PUT']) # 更新用戶自己的 profile
 @permission_classes([IsAuthenticated]) # 只有登入的人才能 access
 def updateUserProfile(request):
     user = request.user
@@ -58,17 +58,49 @@ def updateUserProfile(request):
     user.save()
     return Response(serializer.data)
 
-@api_view(['GET']) # 取單個 User
-@permission_classes([IsAuthenticated]) # 只有登入的人才能 access
+@api_view(['GET']) # 取得用戶自己的 profile
+@permission_classes([IsAuthenticated]) # 登入的人才能 access
 def getUserProfile(request):
-    user = request.user
+    user = request.user # 提供已登入的用戶資料
     serializer = UserSerializer(user,many=False)
     return Response(serializer.data)
 
-
+# ==================== Admin ====================
 @api_view(['GET']) # 取所有 User
 @permission_classes([IsAdminUser]) # 只有Admin才能 access
 def getUsers(request):
     users = User.objects.all()
     serializer = UserSerializer(users,many=True)
+    return Response(serializer.data)
+
+
+@api_view(['DELETE']) # 刪除 User
+@permission_classes([IsAdminUser]) # 只有Admin才能 access
+def deleteUser(request,pk):
+    userForDeletion = User.objects.get(id=pk)
+    userForDeletion.delete()
+    return Response('用戶已成功刪除')
+
+@api_view(['GET']) # 後台用戶管理，取得單個用戶
+@permission_classes([IsAdminUser]) # 只有Admin才能 access
+def adminGetUserById(request,pk):
+    user = User.objects.get(id=pk) # 根據提供的 id 手動查詢特定用戶資料。
+    serializer = UserSerializer(user,many=False)
+    return Response(serializer.data)
+
+@api_view(['PUT']) # 更新用戶的 profile
+@permission_classes([IsAuthenticated]) # 只有登入的人才能 access
+def adminUpdateUser(request,pk):
+    user = User.objects.get(id=pk) 
+    serializer = UserSerializer(user,many=False) 
+
+    data = request.data
+
+    user.first_name = data['first_name']
+    user.username = data['email']
+    user.email = data['email']
+    # user.isAdmin = data['isAdmin']
+    user.is_staff = data['isAdmin']
+
+    user.save()
     return Response(serializer.data)

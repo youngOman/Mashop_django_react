@@ -3,7 +3,7 @@ import React,{ useEffect } from 'react';
 import { Row,Col } from 'react-bootstrap'
 // Component
 import Product from '../components/Product';
-import Loading from '../components/Loading';
+import Loader from '../components/Loader';
 import Message from '../components/Message';
 // redux
 import { useDispatch,useSelector} from 'react-redux';
@@ -13,8 +13,8 @@ import { listProducts } from '../actions/productActions'
 const HomePage = () => {
   // const [products,setProducts] = useState([])
   const dispatch = useDispatch()
-  const ProductList = useSelector(state=>state.ProductList) // 從store.js的 reducer pull出來
-  const { error,loading,products } = ProductList // 並進行解構
+  const productList = useSelector(state=>state.productList) // 從store.js的 reducer pull出來
+  const { error,loading,products } = productList // 並進行解構
 
   useEffect(()=>{
     dispatch(listProducts())
@@ -31,7 +31,7 @@ const HomePage = () => {
   return (  
     <div>
       <h1>最新產品</h1>
-      { loading ? <h1><Loading/></h1> 
+      { loading ? <h1><Loader/></h1> 
         : error ? <h3><Message variant='danger'>{error}</Message></h3> // 要測試錯誤可以去 action 改axios.get
         : 
         <Row> 

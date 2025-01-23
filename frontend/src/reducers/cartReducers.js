@@ -1,27 +1,28 @@
 import { 
     CART_ADD_ITEM, 
-    CART_REMOVE_ITEM 
+    CART_REMOVE_ITEM,
+    CART_SAVE_SHIPPING_ADDRESS_ITEM,
+    CART_SAVE_PAYMENT_METHOD_ITEM,
+    CART_CLEAR_ITEMS,
 } from "../constants/cartsConstants";
 
-export const cartReducer = (state = { cartItems: [] }, action) => {
+export const cartReducer = (state = { cartItems: [],shippingAddress:{} }, action) => {
     switch (action.type) {
         case CART_ADD_ITEM: 
             // 不增加一個新個商品，只要改變 product 的 qty 
             const item = action.payload;
             // 檢查 action.payload 回傳的資料是否存在於 cartItems 
-            // 這邊的 x及 item 後面都是用product_id來比對
+            // 這邊的 x及 item 後面都是用product_id來比對，這個 product_id 是在 addToCart action creator 裡面的 payload 裡面的
             const existItem = state.cartItems.find(x => x.product_id === item.product_id)  // 檢查這個產品是否存在，若有回傳object
             if(existItem){
                 return {
-                    ...state,
-                    // 若此pruduct經檢查後存在，就用新的item取代
+                    ...state, // 若此 pruduct 經檢查後存在，就用新的item取代
                     cartItems:state.cartItems.map( x=>x.product_id===existItem.product_id ? item : x) 
                 }
             }else{
                 return {
                     // 若產品不存在回傳original state
-                    ...state,
-                    // 如果這個product不是我們要update qty的那個就回傳original data，並將item加入cartItems
+                    ...state, // 如果這個product不是我們要update qty的那個就回傳original data，並將item加入cartItems
                     cartItems:[...state.cartItems,item]
                 }
             }
@@ -32,6 +33,21 @@ export const cartReducer = (state = { cartItems: [] }, action) => {
                 // 總之，這行會回傳一個商品已經被刪除的陣列，所以就可以來 UPDATE state.cartItems
                 cartItems:state.cartItems.filter(x=> x.product_id !== action.payload)
             }
+        case CART_SAVE_SHIPPING_ADDRESS_ITEM:
+            return {
+                ...state,
+                shippingAddress:action.payload
+            }
+        case CART_SAVE_PAYMENT_METHOD_ITEM:
+            return {
+                ...state,
+                paymentMethod: action.payload
+            }
+        case CART_CLEAR_ITEMS:
+            return {
+                ...state,
+                cartItems:[]
+            } // 下單後清空購物車
         default:
             return state;
     }

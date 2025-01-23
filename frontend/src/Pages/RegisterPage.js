@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import { Form, Button, Row, Col } from "react-bootstrap";
 // Component
-import Loading from "../components/Loading";
+import Loader from "../components/Loader";
 import Message from "../components/Message";
 import FormContainer from "../components/FormContainer";
 
@@ -23,7 +23,7 @@ const RegisterPage = () => {
   const redirect = location.search ? location.search.split("=")[1] : "/"; // 如果redirect有值就把redirect的值給redirect 沒有就給'/'
 
   const userRegister = useSelector((state) => state.userRegister); // 從store取出userLogin
-  const { error, loading, userInfo } = userRegister; // 從userLogin取出error,Loading,userInfo
+  const { error, loading, userInfo } = userRegister; // 從userLogin取出error,Loader,userInfo
 
   const submitHandler = (e) => {
     e.preventDefault();
@@ -48,7 +48,7 @@ const RegisterPage = () => {
       {message && <Message variant="danger">{message}</Message>}
       {error && <Message variant="danger">{error}</Message>}
       {/* loading 是 action 的狀態 <Loadind /> 是寫好的 Component */}
-      {loading && <Loading />}
+      {loading && <Loader />}
 
       <Form onSubmit={submitHandler}>
         <Form.Group controlId="first_name">

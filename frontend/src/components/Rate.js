@@ -1,6 +1,6 @@
 import React from "react";
 
-function Rating({ value, text, color }) {
+function Rating({ value, text, color }) { // 在 ProductPage.js, ProductListPage.js 中使用
   return (
     <div className="rating">
       <span>

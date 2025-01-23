@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import { Form, Button, Row, Col } from "react-bootstrap";
 // Component
-import Loading from "../components/Loading";
+import Loader from "../components/Loader";
 import Message from "../components/Message";
 import FormContainer from "../components/FormContainer";
 import { login } from "../actions/userActions";
@@ -40,7 +40,7 @@ const LoginPage = () => {
       {error && <Message variant="danger">{error}</Message>}
       {/* 錯誤訊息是來自 backend 的 user_view 的 MytokenObtainPairView 的 Default 訊息 */}
       {/* loading 是 action 的狀態 <Loadind /> 是寫好的 Component */}
-      {loading && <Loading />}
+      {loading && <Loader />}
       <Form onSubmit={submitHandler}>
         <Form.Group controlId="email">
           <Form.Label>電子郵件</Form.Label>

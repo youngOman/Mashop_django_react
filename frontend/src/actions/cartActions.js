@@ -1,7 +1,12 @@
 // 在Views中點擊元件觸發action
 
 import axios from "axios";
-import { CART_ADD_ITEM, CART_REMOVE_ITEM } from "../constants/cartsConstants";
+import {
+  CART_ADD_ITEM,
+  CART_REMOVE_ITEM,
+  CART_SAVE_SHIPPING_ADDRESS_ITEM,
+  CART_SAVE_PAYMENT_METHOD_ITEM,
+} from "../constants/cartsConstants";
 
 // action creator 是一個異步函數
 export const addToCart = (id, qty) => async (dispatch, getState) => {
@@ -25,7 +30,8 @@ export const addToCart = (id, qty) => async (dispatch, getState) => {
   );
 };
 
-export const removeFromCart = (id) => (dispatch, getState) => { // getState 大多都是在需要訪問 store 的裡的數據以做一些操作時使用
+export const removeFromCart = (id) => (dispatch, getState) => {
+  // getState 大多都是在需要訪問 store 的裡的數據以做一些操作時使用
   dispatch({
     type: CART_REMOVE_ITEM,
     payload: id,
@@ -34,4 +40,24 @@ export const removeFromCart = (id) => (dispatch, getState) => { // getState 大�
     "購物車裡的東東",
     JSON.stringify(getState().cart.cartItems)
   );
+};
+
+export const saveShippingAddress = (data) => (dispatch) => {
+  // const { name, email, address, city, postalCode, country } = data;
+
+  dispatch({
+    type: CART_SAVE_SHIPPING_ADDRESS_ITEM,
+    payload: data,
+  });
+
+  localStorage.setItem("shippingAddress", JSON.stringify(data));
+};
+
+export const savePaymentMethod = (data) => (dispatch) => {
+  dispatch({
+    type: CART_SAVE_PAYMENT_METHOD_ITEM,
+    payload: data,
+  });
+
+  localStorage.setItem("paymentMethod", JSON.stringify(data));
 };

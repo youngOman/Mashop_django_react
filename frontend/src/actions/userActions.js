@@ -13,8 +13,24 @@ import {
   USER_UPDATE_PROFILE_REQUEST,
   USER_UPDATE_PROFILE_SUCCESS,
   USER_UPDATE_PROFILE_FAIL,
+
+  USER_LIST_REQUEST,
+	USER_LIST_SUCCESS,
+	USER_LIST_FAIL,
+	USER_LIST_RESET,
+
+  USER_DELETE_REQUEST,
+	USER_DELETE_SUCCESS,
+	USER_DELETE_FAIL,
+
+  USER_UPDATE_REQUEST,
+  USER_UPDATE_SUCCESS,
+  USER_UPDATE_FAIL,
+  // USER_UPDATE_RESET, 這會在 UserEditPage.js 裡使用，所以不用在這裡引入
 } from "../constants/userConstants.js";
 import axios from "axios";
+
+import { ORDER_LIST_MY_RESET } from "../constants/orderConstants";
 
 export const login = (email, password) => async (dispatch) => {
   try {
@@ -51,6 +67,8 @@ export const logout = () => (dispatch) => {
   localStorage.removeItem("userInfo");
   dispatch({ type: USER_LOGOUT });
   dispatch({ type: USER_DETAILS_RESET }) // 登出後要清空 user Object，否則會造成登出後還是會顯示上一個使用者的資料
+  dispatch({ type: ORDER_LIST_MY_RESET }) // 登出後清空訂單資料
+  dispatch({ type: USER_LIST_RESET }) // 登出後清空用戶資料
 };
 
 export const register = (first_name, email, password) => async (dispatch) => {
@@ -177,6 +195,130 @@ export const updateUserProfile = (user) => async (dispatch, getState) => {
   } catch (error) {
     dispatch({
       type: USER_UPDATE_PROFILE_FAIL,
+      payload:
+        error.response && error.response.data.message
+          ? error.response.data.message
+          : error.message,
+    });
+  }
+};
+
+// 更新使用者資料
+export const listUsers = () => async (dispatch, getState) => {
+  // getState 大多都是在需要訪問 store 的裡的數據以做一些操作時使用
+  try {
+    dispatch({
+      type: USER_LIST_REQUEST,
+    });
+
+    const {
+      userLogin: { userInfo },
+    } = getState(); // 確保 User 是登入的狀態
+
+    const config = {
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${userInfo.token}`, // 需要有 token 才能取得資料，因為後端有設 permission_classes
+      },
+    };
+    const { data } = await axios.get(
+      `/api/users/`,
+      config,
+    );
+
+    dispatch({
+      type: USER_LIST_SUCCESS,
+      payload: data, // payload 是後端回傳的資料
+    });
+
+    
+  } catch (error) {
+    dispatch({
+      type: USER_LIST_FAIL,
+      payload:
+        error.response && error.response.data.message
+          ? error.response.data.message
+          : error.message,
+    });
+  }
+};
+
+// 刪除使用者資料
+export const deleteUser = (id) => async (dispatch, getState) => {
+  // getState 大多都是在需要訪問 store 的裡的數據以做一些操作時使用
+  try {
+    dispatch({
+      type: USER_DELETE_REQUEST,
+    });
+
+    const {
+      userLogin: { userInfo },
+    } = getState(); // 確保 User 是登入的狀態
+
+    const config = {
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${userInfo.token}`, // 需要有 token 才能取得資料，因為後端有設 permission_classes
+      },
+    };
+    const { data } = await axios.delete(
+      `/api/users/delete/${id}/`,
+      config,
+    );
+
+    dispatch({
+      type: USER_DELETE_SUCCESS,
+      payload: data, // payload 是後端回傳的資料
+    });
+
+    
+  } catch (error) {
+    dispatch({
+      type: USER_DELETE_FAIL,
+      payload:
+        error.response && error.response.data.message
+          ? error.response.data.message
+          : error.message,
+    });
+  }
+};
+
+// 更新使用者資料
+export const updateUser = (user) => async (dispatch, getState) => {
+  // getState 大多都是在需要訪問 store 的裡的數據以做一些操作時使用
+  try {
+    dispatch({
+      type: USER_UPDATE_REQUEST,
+    });
+
+    const {
+      userLogin: { userInfo },
+    } = getState(); // 確保 User 是登入的狀態
+
+    const config = {
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${userInfo.token}`, // 需要有 token 才能取得資料，因為後端有設 permission_classes
+      },
+    };
+    const { data } = await axios.put(
+      `/api/users/update/${user.id}/`,
+      user,
+      config,
+    );
+
+    dispatch({
+      type: USER_UPDATE_SUCCESS,
+    });
+
+    dispatch({ // 更新成功後自動重新獲取用戶列表
+      type: USER_DETAILS_SUCCESS,
+      payload: data,
+    });
+
+  } catch (error) {
+    dispatch({
+      type: USER_UPDATE_FAIL,
       payload:
         error.response && error.response.data.message
           ? error.response.data.message

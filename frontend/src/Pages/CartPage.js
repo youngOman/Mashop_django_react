@@ -6,7 +6,7 @@ import  Message from '../components/Message';
 import { addToCart,removeFromCart } from '../actions/cartActions'; 
 
 const CartPage = () => {
-  const { productId } = useParams();
+  const { productId } = useParams(); // useParams() 回傳的是物件，所以要用 {} 解構
   const location = useLocation();
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -27,13 +27,17 @@ const CartPage = () => {
     dispatch(removeFromCart(id));
   }
   const checkOutHandler = (id) => {
-    navigate(`/login?redirect=shipping`);
+    // navigate(`/login?redirect=shipping`);
+    navigate(`/shipping`);
   }
   return (
     <Row>
       <Col md={8}>
         <h1>購物車</h1>
-        {cartItems.length === 0 ? (<Message variant='info'>泥的購物車是空的</Message>) : 
+        {cartItems.length === 0 ? (
+        <Message variant='info'>你的購物車是空的！&emsp;  
+          <Link to='/'>回去逛逛？</Link>
+        </Message> ) : 
           (
             <ListGroup variant='flush'>
               {cartItems.map(item => (
@@ -88,13 +92,13 @@ const CartPage = () => {
             </ListGroup>
           )}
       </Col>
-      <Col md={4} className='bg-light'>
+      
+      <Col md={4}>
         <Card>
-          <ListGroup variant='flush'>
+          <ListGroup>
             <ListGroup.Item>
               <h3>購物車目前有 {cartItems.reduce((acc,item)=>acc + item.qty,0)} 個產品</h3>
               <h3>購物車總金額：${cartItems.reduce((acc,item)=>acc + item.qty*item.price,0)}</h3>
-
             </ListGroup.Item>
             <ListGroup.Item>
               <Button 
@@ -105,13 +109,11 @@ const CartPage = () => {
               >
                 前往結帳
               </Button>
-
-          </ListGroup.Item>
+            </ListGroup.Item>
           </ListGroup>
-
-
         </Card>
       </Col>
+
     </Row>
   )
 }

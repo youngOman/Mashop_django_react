@@ -3,7 +3,7 @@ import { useSelector,useDispatch } from 'react-redux';
 import { Link,useParams,useNavigate } from 'react-router-dom';
 // import axios  from 'axios';
 import Rate from '../components/Rate'
-import Loading from '../components/Loading';
+import Loader from '../components/Loader';
 import Message from '../components/Message';
 import { Row,Col,Image,ListGroup,Button,Form } from 'react-bootstrap';
 import { listProductDetail } from '../actions/productActions';
@@ -18,8 +18,8 @@ const ProductPage = () => {
   const [qty,setQty] = useState(1);
   
   const dispatch = useDispatch();
-  const ProductDetail = useSelector(state => state.ProductDetail);
-  const { error,loading,product } = ProductDetail // 要跟store.js的reducer取名一樣
+  const productDetail = useSelector(state => state.productDetail);
+  const { error,loading,product } = productDetail // 要跟store.js的reducer取名一樣
 
   useEffect(() => {
     dispatch(listProductDetail(id))
@@ -40,7 +40,7 @@ const ProductPage = () => {
   return (
     <div>
       <Link to="/" className="btn btn-light my-3">回首頁</Link>
-      {loading ? <h1><Loading/></h1> 
+      {loading ? <h1><Loader/></h1> 
         : error ? <h3><Message variant='danger'>{error}</Message></h3>
         : (
           <>
