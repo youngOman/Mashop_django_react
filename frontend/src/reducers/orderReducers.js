@@ -1,5 +1,4 @@
 // 負責更新應用程式的狀態，根據 action 決定如何改變 state。
-import { act } from "react";
 import {
 	ORDER_CREATE_REQUEST,
 	ORDER_CREATE_SUCCESS,

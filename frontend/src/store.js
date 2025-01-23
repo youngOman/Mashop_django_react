@@ -25,7 +25,7 @@ const shippingAddressFromStorage = localStorage.getItem("shippingAddress") ? JSO
 
 const paymentMethodFromStorage = localStorage.getItem("paymentMethod") ? JSON.parse(localStorage.getItem("paymentMethod")) : {};
 
-// 進入頁面時的初始State
+// 進入頁面時的初始 State
 export const initialState = {
 	cart: {
 		cartItems: cartItemsFromStorage,
@@ -33,9 +33,23 @@ export const initialState = {
 		paymentMethod: paymentMethodFromStorage,
 	},
 	userLogin: { userInfo: userInfoFromStorage },
+	// orderListAll: { orders: [] },
+	// orderDetails: { order: {} },
+	// orderPay: { success: false },
+	// orderListMy: { orders: [] },
+	// orderCreate: { success: false },
+	// orderDeliver: { success: false },
+	// userList: { users: [] },
+	// userDelete: { success: false },
+	// userUpdate: { success: false },
+	// productList: { products: [] },
+	// productDetail: { product: {} },
+	// productDelete: { success: false },
+	// productCreate: { success: false },
+	// productUpdate: { success: false },
 };
 // 處理異步 action creator
-const middleware = [thunk]; // 不需要applyMiddleware了
+const middleware = [thunk]; // 不需要 applyMiddleware了
 
 const store = configureStore({
 	reducer: {

@@ -70,14 +70,14 @@ def getMyOrders(request):
     serializer = OrderSerializer(orders, many=True)
     return Response(serializer.data)
 
-# 取得所有訂單
+# 取得單一訂單
 @api_view(['GET'])
 @permission_classes([IsAuthenticated])
 def getOrderById(request, pk):
     user = request.user
     try:
         order = Order.objects.get(id=pk)
-        if order.user == user:
+        if order.user == user or user.is_staff:
             serializer = OrderSerializer(order, many=False)
             return Response(serializer.data)
         else:
@@ -111,6 +111,11 @@ def adminGetAllOrders(request):
 def updateOrderToDelivered(request, pk):
     order = Order.objects.get(id=pk)
     order.isDelivered = True
+    # 取得現在時間
+    timezone_taipei = pytz.timezone('Asia/Taipei')
+    now = timezone.now().astimezone(timezone_taipei)
+    order.deliveredAt = now
     order.save()
     return Response('訂單狀態已更新為：已運送')
+
 
