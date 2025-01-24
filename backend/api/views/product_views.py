@@ -9,7 +9,14 @@ from api.serializer import ProductSerializer
 
 @api_view(['GET'])
 def getProducts(request):
-    products = Product.objects.all()
+    query = request.query_params.get('keyword')
+    # print("query:", query)
+    if query is None:
+        query = ''
+        products = Product.objects.all()
+    else:
+        products = Product.objects.filter(name__icontains=query)
+
     serializer = ProductSerializer(products, many=True)
     return Response(serializer.data)
 

@@ -6,7 +6,9 @@ import Product from '../components/Product';
 import Loader from '../components/Loader';
 import Message from '../components/Message';
 // redux
-import { useDispatch,useSelector} from 'react-redux';
+
+import { useLocation } from 'react-router-dom';
+import { useDispatch,useSelector } from 'react-redux';
 import { listProducts } from '../actions/productActions'
 
 
@@ -16,9 +18,11 @@ const HomePage = () => {
   const productList = useSelector(state=>state.productList) // 從store.js的 reducer pull出來
   const { error,loading,products } = productList // 並進行解構
 
-  useEffect(()=>{
-    dispatch(listProducts())
+  let keyword = useLocation().search
+  // console.log(keyword);
 
+  useEffect(()=>{
+    dispatch(listProducts(keyword))
     // // console.log('useEffect有作用啦');  
     // async function fetchProducts(){
     //   const {data} = await axios.get("api/products/");
@@ -26,7 +30,7 @@ const HomePage = () => {
     //   // console.log({data});
     // }
     // fetchProducts();
-  },[dispatch])
+  },[dispatch,keyword])
 
   return (  
     <div>

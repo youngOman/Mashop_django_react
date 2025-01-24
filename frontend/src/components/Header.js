@@ -1,11 +1,12 @@
+// cdnjs.com 找 font-awesome
 import React from "react";
 import { Container, Navbar, Nav, NavDropdown } from "react-bootstrap";
-// React-router-bootstrap
 import { LinkContainer } from "react-router-bootstrap";
 import { useDispatch, useSelector } from "react-redux";
 
 import { logout } from "../actions/userActions";
-// cdnjs.com找font-awesome
+import SearchBar from "./SearchBar";
+
 const Header = () => {
 	const dispatch = useDispatch();
 
@@ -68,7 +69,7 @@ const Header = () => {
 								<LinkContainer to='/admin/orderlist'>
 									<NavDropdown.Item>訂單管理</NavDropdown.Item>
 								</LinkContainer>
-								
+
 								<NavDropdown.Item>Another action</NavDropdown.Item>
 
 								<NavDropdown.Item>Something</NavDropdown.Item>
@@ -77,6 +78,9 @@ const Header = () => {
 							</NavDropdown>
 						)}
 					</Nav>
+					<div className='ms-auto'>
+						<SearchBar />
+					</div>
 				</Navbar.Collapse>
 			</Container>
 		</Navbar>
