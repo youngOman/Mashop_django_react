@@ -16,23 +16,29 @@ import {
 	PRODUCT_UPDATE_REQUEST,
 	PRODUCT_UPDATE_SUCCESS,
 	PRODUCT_UPDATE_FAIL,
+	PRODUCT_CREATE_REVIEW_REQUEST,
+	PRODUCT_CREATE_REVIEW_SUCCESS,
+	PRODUCT_CREATE_REVIEW_FAIL,
+	// PRODUCT_CREATE_REVIEW_RESET, // 在 ProductPage 使用
 } from "../constants/productsConstants";
 
-export const listProducts = (keyword = "") => async (dispatch) => {
-	try {
-		dispatch({ type: PRODUCT_LIST_REQUEST });
-		const { data } = await axios.get(`/api/products/${keyword}`);
-		dispatch({
-			type: PRODUCT_LIST_SUCCESS,
-			payload: data, // reducers的action.payload
-		}); // 成功的話
-	} catch (error) {
-		dispatch({
-			type: PRODUCT_LIST_FAIL,
-			payload: error.response && error.response.data.message ? error.response.data.message : error.message,
-		}); // 檢查若 error.response && error.response.data.message 存在就回傳 error.response.data.message 否則就用預設的error.message
-	}
-};
+export const listProducts =
+	(keyword = "") =>
+	async (dispatch) => {
+		try {
+			dispatch({ type: PRODUCT_LIST_REQUEST });
+			const { data } = await axios.get(`/api/products/${keyword}`);
+			dispatch({
+				type: PRODUCT_LIST_SUCCESS,
+				payload: data, // reducers的action.payload
+			}); // 成功的話
+		} catch (error) {
+			dispatch({
+				type: PRODUCT_LIST_FAIL,
+				payload: error.response && error.response.data.message ? error.response.data.message : error.message,
+			}); // 檢查若 error.response && error.response.data.message 存在就回傳 error.response.data.message 否則就用預設的error.message
+		}
+	};
 
 export const listProductDetail = (id) => async (dispatch) => {
 	try {
@@ -154,6 +160,39 @@ export const updateProduct = (product) => async (dispatch, getState) => {
 	} catch (error) {
 		dispatch({
 			type: PRODUCT_UPDATE_FAIL,
+			payload: error.response && error.response.data.detail ? error.response.data.detail : error.message,
+		});
+	}
+};
+
+// 用戶新增產品評論
+export const createProductReview = (productId, review) => async (dispatch, getState) => {
+	try {
+		dispatch({
+			type: PRODUCT_CREATE_REVIEW_REQUEST,
+		});
+
+		const {
+			userLogin: { userInfo },
+		} = getState();
+
+		const config = {
+			headers: {
+				"Content-type": "application/json",
+				Authorization: `Bearer ${userInfo.token}`,
+			},
+		};
+
+		const { data } = await axios.post(`/api/products/${productId}/reviews/`, review, config); // 送出評論
+
+		dispatch({
+			type: PRODUCT_CREATE_REVIEW_SUCCESS,
+			payload: data,
+		});
+
+	} catch (error) {
+		dispatch({
+			type: PRODUCT_CREATE_REVIEW_FAIL,
 			payload: error.response && error.response.data.detail ? error.response.data.detail : error.message,
 		});
 	}

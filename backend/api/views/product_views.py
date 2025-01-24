@@ -1,5 +1,5 @@
 # from .products import products
-from api.models import Product
+from api.models import Product, Review
 # DRF
 from rest_framework.decorators import api_view, permission_classes
 from rest_framework.permissions import IsAuthenticated, IsAdminUser
@@ -91,3 +91,39 @@ def uploadProductImage(request):
     # print("FILES:", request.FILES)
     product.save()
     return Response('圖片上傳成功！')
+
+# 用戶發表產品評論
+@api_view(['POST'])
+def createProductReview(request, pk):
+    user = request.user
+    product = Product.objects.get(id=pk)
+    data = request.data
+    print("data:", data)
+
+    # 檢查用戶是否已經評論過該產品
+    alreadyExists = product.review_set.filter(user=user).exists()
+    if alreadyExists:
+        content = {'detail': '您已經評論過該產品'}
+        return Response(content, status=400)
+    # 檢查評論的 Rating 是否存在或為 0
+    elif data['rating'] == 0:
+        content = {'detail': '請選擇評分'}
+        return Response(content, status=400)
+    else:
+        review = Review.objects.create(
+            user=user,
+            product=product,
+            name=user.first_name,
+            rating=data['rating'],
+            comment=data['comment'],
+        )
+    # 新增評論，並計算、更新評論數量和評分
+    reviews = product.review_set.all()
+    product.numReviews = len(reviews)
+    # 計算評分
+    total = 0
+    for i in reviews:
+        total += i.rating
+    product.rating = total / len(reviews)
+    product.save()
+    return Response('評論發表成功！')

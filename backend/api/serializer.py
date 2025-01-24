@@ -3,7 +3,7 @@ from .models import Product
 from rest_framework import serializers
 from rest_framework_simplejwt.tokens import RefreshToken
 from rest_framework.permissions import IsAuthenticated, IsAdminUser
-from .models import Product, Order, OrderItem, ShippingAddress
+from .models import Product, Order, OrderItem, ShippingAddress, Review
 # 這個 class是負責產生 "登入" 的 token
 
 
@@ -16,8 +16,8 @@ class UserSerializer(serializers.ModelSerializer):
         model = User
         fields = ['id', 'isAdmin', 'first_name', 'last_name', 'username', 'email']
 
-    def get_isAdmin(self, obj): # 取得 is_staff 值，包裝」成一個叫 isAdmin 的欄位，輸出到 API 的回應中，方便前端判斷
-        return obj.is_staff  
+    def get_isAdmin(self, obj):  # 取得 is_staff 值，包裝」成一個叫 isAdmin 的欄位，輸出到 API 的回應中，方便前端判斷
+        return obj.is_staff
 
     def get_first_name(self, obj):  # 命名就是一定得 get_(跟欄位名稱一樣)
         first_name = obj.first_name
@@ -41,10 +41,23 @@ class UserSerializerWithToken(UserSerializer):  # 繼承 UserSerializer 就不�
         return str(token.access_token)  # 因為token是物件，所以要轉成字串
 
 
+class ReviewSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Review
+        fields = '__all__'
+
+
 class ProductSerializer(serializers.ModelSerializer):
+    reviews = serializers.SerializerMethodField(read_only=True)  # 新增評論欄位
+
     class Meta:
         model = Product
         fields = '__all__'
+
+    def get_reviews(self, obj): # get_+欄位名稱，是 DRF 固定寫法
+        reviews = obj.review_set.all()
+        serializer = ReviewSerializer(reviews, many=True)
+        return serializer.data
 
 
 class ShippingAddressSerializer(serializers.ModelSerializer):

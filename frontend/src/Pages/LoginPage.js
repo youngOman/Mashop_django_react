@@ -42,7 +42,7 @@ const LoginPage = () => {
       {/* loading 是 action 的狀態 <Loadind /> 是寫好的 Component */}
       {loading && <Loader />}
       <Form onSubmit={submitHandler}>
-        <Form.Group controlId="email">
+        <Form.Group controlId="email" className="my-3">
           <Form.Label>電子郵件</Form.Label>
           <Form.Control
             type="email"
@@ -52,7 +52,7 @@ const LoginPage = () => {
           ></Form.Control>
         </Form.Group>
 
-        <Form.Group controlId="password">
+        <Form.Group controlId="password" className="my-3">
           <Form.Label>密碼</Form.Label>
           <Form.Control
             type="password"
@@ -62,16 +62,16 @@ const LoginPage = () => {
           ></Form.Control>
         </Form.Group>
 
-        <Button type="submit" variant="primary">
+        <Button type="submit" variant="primary" className="my-3 w-100">
           登入
         </Button>
       </Form>
 
-      <Row className="py-3">
+      <Row className="py-3 text-center">
         <Col>
-          新會員嗎?{" "}
+          新會員嗎 ?{" "}
           <Link to={redirect ? `/register?redirect=${redirect}` : "/register"}>
-            註冊
+            註冊帳號
           </Link>
         </Col>
       </Row>

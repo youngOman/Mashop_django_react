@@ -27,8 +27,8 @@ class Review(models.Model):
     comment = models.TextField(null=True, blank=True)
     createdAt = models.DateTimeField(auto_now_add=True)
 
-    def __str__(self) -> str:  # 讓後台能顯示產品名稱，否則只會顯示 Product Object(1)
-        return self.rating
+    def __str__(self) -> str:
+        return str(self.rating) # 要轉換成字串，否則會報錯(__str__ returned non-string (type int)
 
 
 class Order(models.Model):
