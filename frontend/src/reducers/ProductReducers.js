@@ -27,13 +27,28 @@ import {
 	PRODUCT_CREATE_REVIEW_RESET,
 } from "../constants/productsConstants";
 
+// export const productListReducer = (state = { products: [] }, action) => {
+// 	// 列出所有產品
+// 	switch (action.type) {
+// 		case PRODUCT_LIST_REQUEST: // 請求中
+// 			return { loading: true, products: [] };
+// 		case PRODUCT_LIST_SUCCESS: // 成功
+// 			return { loading: false, products: action.payload }; // 請求到資料，loading 結束
+// 		case PRODUCT_LIST_FAIL: // 錯誤
+// 			return { loading: false, error: action.payload };
+// 		default:
+// 			return state;
+// 	}
+// };
+
+// 測試分頁功能用
 export const productListReducer = (state = { products: [] }, action) => {
 	// 列出所有產品
 	switch (action.type) {
 		case PRODUCT_LIST_REQUEST: // 請求中
 			return { loading: true, products: [] };
 		case PRODUCT_LIST_SUCCESS: // 成功
-			return { loading: false, products: action.payload }; // 請求到資料了=loading結束
+			return { loading: false, products: action.payload.products, page: action.payload.page, pages: action.payload.pages }; // 請求到資料，loading 結束
 		case PRODUCT_LIST_FAIL: // 錯誤
 			return { loading: false, error: action.payload };
 		default:

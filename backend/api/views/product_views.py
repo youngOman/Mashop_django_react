@@ -4,6 +4,7 @@ from api.models import Product, Review
 from rest_framework.decorators import api_view, permission_classes
 from rest_framework.permissions import IsAuthenticated, IsAdminUser
 from rest_framework.response import Response
+from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from api.serializer import ProductSerializer
 
 
@@ -13,12 +14,28 @@ def getProducts(request):
     # print("query:", query)
     if query is None:
         query = ''
-        products = Product.objects.all()
-    else:
-        products = Product.objects.filter(name__icontains=query)
+
+    products = Product.objects.filter(name__icontains=query)
+
+    page = request.query_params.get('page') # 從網址取得 page 參數
+    paginator = Paginator(products, 2)  # 每頁顯示 2 個產品
+
+    try:
+        products = paginator.page(page)
+    except PageNotAnInteger:  # 如果 page 不是整數，則預設為 1
+        products = paginator.page(1)
+    except EmptyPage:
+        products = paginator.page(paginator.num_pages)
+
+    if page is None:
+        page = 1
+
+    page = int(page)
+    print("page:", page)
 
     serializer = ProductSerializer(products, many=True)
-    return Response(serializer.data)
+    # return Response(serializer.data)
+    return Response({'products': serializer.data, 'page': page, 'pages': paginator.num_pages})
 
 
 @api_view(['GET'])
@@ -87,12 +104,14 @@ def uploadProductImage(request):
     product_id = data['product_id']  # 取得產品 id
     product = Product.objects.get(id=product_id)
     product.image = request.FILES.get('product_image')
-    
+
     # print("FILES:", request.FILES)
     product.save()
     return Response('圖片上傳成功！')
 
 # 用戶發表產品評論
+
+
 @api_view(['POST'])
 def createProductReview(request, pk):
     user = request.user
@@ -106,7 +125,7 @@ def createProductReview(request, pk):
         content = {'detail': '您已經評論過該產品'}
         return Response(content, status=400)
     # 檢查評論的 Rating 是否存在或為 0
-    elif data['rating'] == 0:
+    elif data['rating'] == 0 or data['rating'] is None or data['rating'] == '':
         content = {'detail': '請選擇評分'}
         return Response(content, status=400)
     else:

@@ -1,11 +1,11 @@
 import React, { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { Link, useParams, useNavigate } from "react-router-dom";
+import { Row, Col, Image, ListGroup, Button, Form, Card } from "react-bootstrap";
 // Component
 import Rate from "../components/Rate";
 import Loader from "../components/Loader";
 import Message from "../components/Message";
-import { Row, Col, Image, ListGroup, Button, Form, Card } from "react-bootstrap";
 // Action
 import { listProductDetail, createProductReview } from "../actions/productActions";
 // Constant
@@ -169,7 +169,7 @@ const ProductPage = () => {
 												<Form.Control as='textarea' rows={5} value={comment} onChange={(e) => setComment(e.target.value)} placeholder='輸入您對此商品的評論...' />
 											</Form.Group>
 
-											<Button type='submit' variant='primary' className='my-2'>
+											<Button type='submit' disabled={loadingCreateReview} variant='primary' className='my-2'>
 												送出評論
 											</Button>
 										</Form>
@@ -182,6 +182,7 @@ const ProductPage = () => {
 							</ListGroup>
 						</Col>
 					</Row>
+
 				</>
 			)}
 		</div>

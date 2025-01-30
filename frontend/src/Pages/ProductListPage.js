@@ -2,11 +2,12 @@ import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { LinkContainer } from "react-router-bootstrap";
 import { useNavigate } from "react-router-dom";
+import { useLocation } from "react-router-dom";
 import { Table, Button, Row, Col } from "react-bootstrap";
 // Component
 import Loader from "../components/Loader";
 import Message from "../components/Message";
-
+import Paginate from "../components/Paginate";
 import { listProducts, deleteProduct, createProduct } from "../actions/productActions";
 import { PRODUCT_CREATE_RESET } from "../constants/productsConstants"; // 重置新增產品的狀態
 
@@ -14,8 +15,10 @@ const ProductListPage = () => {
 	const navigate = useNavigate();
 	const dispatch = useDispatch();
 
+	let keyword = useLocation().search;
+
 	const productList = useSelector((state) => state.productList);
-	const { loading, error, products } = productList;
+	const { loading, error, products, page, pages } = productList;
 
 	const productDelete = useSelector((state) => state.productDelete);
 	const { loading: loadingDelete, error: errorDelete, success: successDelete } = productDelete;
@@ -25,12 +28,13 @@ const ProductListPage = () => {
 
 	useEffect(() => {
 		dispatch({ type: PRODUCT_CREATE_RESET }); // 進入頁面先重置新增產品狀態
-		if (successCreate) { // 若成功新增產品，導向到該產品編輯頁面
+		if (successCreate) {
+			// 若成功新增產品，導向到該產品編輯頁面
 			navigate(`/admin/product/${createdProduct.id}/edit`);
 		} else {
-			dispatch(listProducts());
+			dispatch(listProducts(keyword));
 		}
-	}, [dispatch, navigate, successDelete, successCreate, createdProduct]); // 這邊放 successDelete，因為要在刪除使用者後自動重新載入頁面
+	}, [dispatch, navigate, successDelete, successCreate, createdProduct, keyword]); // 這邊放 successDelete，因為要在刪除使用者後自動重新載入頁面
 
 	const createProductHandler = () => {
 		dispatch(createProduct());
@@ -77,39 +81,43 @@ const ProductListPage = () => {
 			) : error ? (
 				<Message variant='danger'>{error}</Message>
 			) : (
-				<Table striped hover responsive className='table-sm table-light'>
-					<thead>
-						<tr>
-							<th>ID</th>
-							<th>產品名稱</th>
-							<th>價格</th>
-							<th>分類</th>
-							<th>品牌</th>
-							<th></th>
-						</tr>
-					</thead>
-					<tbody>
-						{products.map((product) => (
-							<tr key={product.id}>
-								<td>{product.id}</td>
-								<td>{product.name}</td>
-								<td>{product.price} </td>
-								<td>{product.category}</td>
-								<td>{product.brand}</td>
-								<td>
-									<LinkContainer to={`/admin/product/${product.id}/edit`}>
-										<Button variant='light' className='btn-sm'>
-											<i className='fas fa-edit'></i>
-										</Button>
-									</LinkContainer>
-									<Button variant='danger' className='btn-sm' onClick={() => deleteProductHandler(product.id)}>
-										<i className='fas fa-trash'></i>
-									</Button>
-								</td>
+				<>
+					<Table striped hover responsive className='table-sm table-light'>
+						<thead>
+							<tr>
+								<th>ID</th>
+								<th>產品名稱</th>
+								<th>價格</th>
+								<th>分類</th>
+								<th>品牌</th>
+								<th></th>
 							</tr>
-						))}
-					</tbody>
-				</Table>
+						</thead>
+						<tbody>
+							{products.map((product) => (
+								<tr key={product.id}>
+									<td>{product.id}</td>
+									<td>{product.name}</td>
+									<td>{product.price} </td>
+									<td>{product.category}</td>
+									<td>{product.brand}</td>
+									<td>
+										<LinkContainer to={`/admin/product/${product.id}/edit`}>
+											<Button variant='light' className='btn-sm'>
+												<i className='fas fa-edit'></i>
+											</Button>
+										</LinkContainer>
+										<Button variant='danger' className='btn-sm' onClick={() => deleteProductHandler(product.id)}>
+											<i className='fas fa-trash'></i>
+										</Button>
+									</td>
+								</tr>
+							))}
+						</tbody>
+					</Table>
+					
+					<Paginate pages={pages} page={page} isAdmin={true} />
+				</>
 			)}
 		</div>
 	);
