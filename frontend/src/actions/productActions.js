@@ -20,6 +20,9 @@ import {
 	PRODUCT_CREATE_REVIEW_SUCCESS,
 	PRODUCT_CREATE_REVIEW_FAIL,
 	// PRODUCT_CREATE_REVIEW_RESET, // 在 ProductPage 使用
+	PRODUCT_TOP_RATED_REQUEST,
+	PRODUCT_TOP_RATED_SUCCESS,
+	PRODUCT_TOP_RATED_FAIL,
 } from "../constants/productsConstants";
 
 export const listProducts =
@@ -189,11 +192,27 @@ export const createProductReview = (productId, review) => async (dispatch, getSt
 			type: PRODUCT_CREATE_REVIEW_SUCCESS,
 			payload: data,
 		});
-
 	} catch (error) {
 		dispatch({
 			type: PRODUCT_CREATE_REVIEW_FAIL,
 			payload: error.response && error.response.data.detail ? error.response.data.detail : error.message,
+		});
+	}
+};
+
+// 取得評分高的產品
+export const listTopRatedProducts = () => async (dispatch) => {
+	try {
+		dispatch({ type: PRODUCT_TOP_RATED_REQUEST });
+		const { data } = await axios.get(`/api/products/top-rated/`);
+		dispatch({
+			type: PRODUCT_TOP_RATED_SUCCESS,
+			payload: data,
+		});
+	} catch (error) {
+		dispatch({
+			type: PRODUCT_TOP_RATED_FAIL,
+			payload: error.response && error.response.data.message ? error.response.data.message : error.message,
 		});
 	}
 };

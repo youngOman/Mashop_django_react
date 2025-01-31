@@ -9,6 +9,7 @@ import Product from "../components/Product";
 import Loader from "../components/Loader";
 import Message from "../components/Message";
 import Paginate from "../components/Paginate";
+import ProductCarousel from "../components/ProductCarousel";
 
 const HomePage = () => {
 	// const [products,setProducts] = useState([])
@@ -32,6 +33,9 @@ const HomePage = () => {
 
 	return (
 		<div>
+			{/* 有 keyword 就「不」顯示 ProductCarousel */}
+			{!keyword && <ProductCarousel />}
+			
 			<h1>最新產品</h1>
 			{loading ? (
 				<h1>

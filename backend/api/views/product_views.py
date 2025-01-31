@@ -18,7 +18,7 @@ def getProducts(request):
     products = Product.objects.filter(name__icontains=query)
 
     page = request.query_params.get('page') # 從網址取得 page 參數
-    paginator = Paginator(products, 2)  # 每頁顯示 2 個產品
+    paginator = Paginator(products, 4)  # 每頁顯示 2 個產品
 
     try:
         products = paginator.page(page)
@@ -146,3 +146,10 @@ def createProductReview(request, pk):
     product.rating = total / len(reviews)
     product.save()
     return Response('評論發表成功！')
+
+
+@api_view(['GET'])
+def getTopProducts(request):
+    products = Product.objects.filter(rating__gte=4).order_by('-rating')[:5]
+    serializer = ProductSerializer(products, many=True)
+    return Response(serializer.data)

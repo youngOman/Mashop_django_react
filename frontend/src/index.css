@@ -6,3 +6,67 @@ h3 {
 	font-size: 1.2rem;
 	padding: 1rem 0;
 }
+
+/* 輪播 */
+.product-carousel {
+	width: 100%;
+	max-width: 900px; /* 控制輪播最大寬度 */
+	margin: auto;
+	border-radius: 10px;
+	overflow: hidden;
+	box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2);
+}
+
+/* 輪播項目 */
+.carousel-item {
+	position: relative;
+	width: 100%;
+	height: 400px; /* 設定固定高度，避免跳動 */
+	display: flex;
+	justify-content: center;
+	align-items: center;
+}
+
+/* 輪播圖片 */
+.carousel-image {
+	width: 100%;
+	height: 100%;
+	object-fit: cover; /* 保持圖片比例並填滿區域 */
+	border-radius: 8px;
+	transition: transform 0.3s ease-in-out;
+}
+
+.carousel-image:hover {
+	transform: scale(1.05); /* 略微放大圖片，增加互動性 */
+}
+
+.carousel-caption {
+	position: absolute;
+	bottom: 20px;
+	left: 50%;
+	background: rgba(32, 32, 32, 0.6);
+	color: white;
+	padding: 10px 20px;
+	border-radius: 5px;
+	width: 80%;
+	text-align: center;
+}
+
+/* 產品名稱 */
+.carousel-caption h2 {
+	font-size: 20px;
+}
+
+/* 產品價格 */
+.carousel-caption span {
+	font-size: 24px;
+	font-weight: bold;
+	margin-left: 8px;
+}
+
+
+/* 讓箭頭區塊更美觀 */
+.carousel-control-prev-icon,
+.carousel-control-next-icon {
+	background-color: #000000;
+}
