@@ -17,7 +17,7 @@ def getProducts(request):
 
     products = Product.objects.filter(name__icontains=query)
 
-    page = request.query_params.get('page') # 從網址取得 page 參數
+    page = request.query_params.get('page')  # 從網址取得 page 參數
     paginator = Paginator(products, 4)  # 每頁顯示 2 個產品
 
     try:
@@ -110,8 +110,6 @@ def uploadProductImage(request):
     return Response('圖片上傳成功！')
 
 # 用戶發表產品評論
-
-
 @api_view(['POST'])
 def createProductReview(request, pk):
     user = request.user
@@ -147,7 +145,7 @@ def createProductReview(request, pk):
     product.save()
     return Response('評論發表成功！')
 
-
+# 取得評價高於 4 的產品
 @api_view(['GET'])
 def getTopProducts(request):
     products = Product.objects.filter(rating__gte=4).order_by('-rating')[:5]

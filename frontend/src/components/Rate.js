@@ -68,7 +68,7 @@ function Rating({ value, text, color }) { // 在 ProductPage.js, ProductListPage
         ></i>
       </span>
 
-      <span>{text && text}</span>
+      <span className="mx-2">{text && text}</span>
     </div>
   );
 }
