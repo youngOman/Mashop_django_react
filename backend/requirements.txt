@@ -1,0 +1,14 @@
+asgiref @ file:///private/var/folders/nz/j6p8yfhx1mv_0grj5xl4650h0000gp/T/abs_63w24gebjz/croots/recipe/asgiref_1661287537348/work
+autopep8 @ file:///opt/conda/conda-bld/autopep8_1650463822033/work
+certifi @ file:///private/var/folders/nz/j6p8yfhx1mv_0grj5xl4650h0000gp/T/abs_5d968ni_yn/croot/certifi_1671487774636/work/certifi
+Django @ file:///private/var/folders/nz/j6p8yfhx1mv_0grj5xl4650h0000gp/T/abs_cdse89o2w5/croots/recipe/django_1661292537238/work
+django-cors-headers==3.13.0
+djangorestframework==3.14.0
+djangorestframework-simplejwt==5.2.2
+Pillow==9.4.0
+pycodestyle @ file:///tmp/build/80754af9/pycodestyle_1636635402688/work
+PyJWT==2.6.0
+PyMySQL==1.0.2
+pytz==2022.7
+sqlparse @ file:///private/var/folders/nz/j6p8yfhx1mv_0grj5xl4650h0000gp/T/abs_73ubbfcjni/croot/sqlparse_1668793445223/work
+toml @ file:///tmp/build/80754af9/toml_1616166611790/work
