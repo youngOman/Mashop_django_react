@@ -2,7 +2,7 @@
 import { configureStore } from "@reduxjs/toolkit";
 import thunk from "redux-thunk";
 // reducers
-import { productListReducer, productDetailReducer, productDeleteReducer, productCreateReducer, productUpdateReducer, productCreateReviewReducer, productTopRatedReducer } from "./reducers/productReducers";
+import { productListReducer, productDetailReducer, productDeleteReducer, productCreateReducer, productUpdateReducer, productCreateReviewReducer, productTopRatedReducer } from "./reducers/ProductReducers";
 import { cartReducer } from "./reducers/cartReducers";
 import {
 	userLoginReducer,

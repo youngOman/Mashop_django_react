@@ -51,7 +51,9 @@ ROOT_URLCONF = 'backend.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
+        'DIRS': [
+            os.path.join(BASE_DIR,"frontend/build"), # 告訴 Django 去哪裡找我們的 Template 檔案
+        ],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -130,9 +132,10 @@ USE_TZ = True
 STATIC_URL = '/static/'
 
 # 放靜態文件的路徑，可指定多個
-# collectstatic = Django掃遍STATICFILES_DIRS裡的絕對路徑逐一蒐集到STATIC_ROOT裡
+# collectstatic = Django掃遍 STATICFILES_DIRS 裡的絕對路徑逐一蒐集到 STATIC_ROOT裡
 STATICFILES_DIRS = [
     BASE_DIR / 'static',
+    BASE_DIR / 'frontend/build/static'
 ]
 STATIC_ROOT = os.path.join(BASE_DIR,"")
 

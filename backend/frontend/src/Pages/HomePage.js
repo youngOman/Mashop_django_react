@@ -36,7 +36,7 @@ const HomePage = () => {
 			{/* 有 keyword 就「不」顯示 ProductCarousel */}
 			{!keyword && <ProductCarousel />}
 			
-			<h1>最新產品</h1>
+			<h1>最新產品(2025更新)</h1>
 			{loading ? (
 				<h1>
 					<Loader />
