@@ -11,4 +11,5 @@
 - [x]  撰寫評論
 - [x]  分頁功能 Pagination，前台 ＆後台
 - [x]  主頁 Carousel
-- [ ]  部署至 cloudflare
+- [ ]  部署至 Nginx...
+
