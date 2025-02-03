@@ -2,7 +2,7 @@ import Header from "./components/Header";
 import Footer from "./components/Footer";
 import { Container } from "react-bootstrap";
 // React-router-dom
-import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { HashRouter, Routes, Route } from "react-router-dom";
 // Pages import 有default的 export 不用加 { }
 // import [Component名稱] from "./Pages/[檔案名稱]";
 import HomePage from "./Pages/HomePage";
@@ -29,7 +29,7 @@ import ProductEditPage from "./Pages/ProductEditPage";
 
 function App() { // 網頁路由
 	return (
-		<BrowserRouter>
+		<HashRouter>
 			<div className='App'>
 				<Header />
 				<main className='py-3'>
@@ -63,7 +63,7 @@ function App() { // 網頁路由
 				</main>
 				<Footer />
 			</div>
-		</BrowserRouter>
+		</HashRouter>
 	);
 }
 

@@ -1,16 +1,15 @@
-import React, { useState, useEffect } from "react";
+import React, { useEffect } from "react";
 import { Button, Row, Col, ListGroup, Image, Card ,Table} from "react-bootstrap";
 import { useDispatch, useSelector } from "react-redux";
-import { Link, useLocation, useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
-import { savePaymentMethod } from "../actions/cartActions";
 import { removeFromCart } from "../actions/cartActions";
 import { createOrder } from "../actions/orderActions";
 // Components
 import CheckoutSteps from "../components/CheckoutSteps";
 import  Message from '../components/Message';
 
-import { ORDER_CREATE_RESET } from "../constants/orderConstants";
+// import { ORDER_CREATE_RESET } from "../constants/orderConstants";
 
 const PlaceOrderPage = () => {
   
