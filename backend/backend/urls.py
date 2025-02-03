@@ -13,7 +13,6 @@ urlpatterns = [
     path('api/products/', include('api.urls.product_urls')),
     path('api/users/', include('api.urls.user_urls')),
     path('api/orders/', include('api.urls.order_urls')),
-
 ]
 
 urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)  # 指向 settings.py 的 MEDIA_URL

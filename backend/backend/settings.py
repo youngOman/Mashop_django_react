@@ -52,7 +52,7 @@ TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
         'DIRS': [
-            os.path.join(BASE_DIR,"frontend/build"), # 告訴 Django 去哪裡找我們的 Template 檔案
+            os.path.join(BASE_DIR, "frontend/build"),  # 告訴 Django 去哪裡找我們的 Template 檔案
         ],
         'APP_DIRS': True,
         'OPTIONS': {
@@ -83,12 +83,12 @@ DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
         'NAME': 'maShop',
-        'USER':'www',
-        'PASSWORD':'Buty_2350973',
-        'HOST':'192.168.1.101',
-        'PORT':'3306',
-        'OPTIONS':{
-        'init_command':"SET sql_mode='STRICT_TRANS_TABLES'"  
+        'USER': 'www',
+        'PASSWORD': 'Buty_2350973',
+        'HOST': '192.168.1.101',
+        'PORT': '3306',
+        'OPTIONS': {
+            'init_command': "SET sql_mode='STRICT_TRANS_TABLES'"
         }
     }
 }
@@ -127,7 +127,7 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/4.1/howto/static-files/
 
-# 靜態檔案也需要一組url，才得以在瀏覽器瀏覽 
+# 靜態檔案也需要一組url，才得以在瀏覽器瀏覽
 # 在瀏覽器輸入http://127.0.0.1:8000/static/result.css，就可以看得到檔案內容。
 STATIC_URL = '/static/'
 
@@ -137,12 +137,11 @@ STATICFILES_DIRS = [
     BASE_DIR / 'static',
     BASE_DIR / 'frontend/build/static'
 ]
-STATIC_ROOT = os.path.join(BASE_DIR,"")
 
-# User 上傳檔案的目的地，沒有的話就會直接上傳在根目錄 backend/xxx.png
-MEDIA_ROOT = 'static/images'
-# 圖片的網址，需要去urls.py新增pattern指定此url
-MEDIA_URL = '/images/'
+STATIC_ROOT = os.path.join(BASE_DIR, "") 
+MEDIA_ROOT = 'static/images'  # User 上傳檔案的目的地，沒有的話就會直接上傳在根目錄 backend/xxx.png
+
+MEDIA_URL = '/images/'  # 圖片的網址，需要去urls.py新增pattern指定此url
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.1/ref/settings/#default-auto-field
@@ -150,12 +149,11 @@ MEDIA_URL = '/images/'
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 CORS_ALLOWED_ORIGINS = [
-    "http://localhost:3000", # 不要加 /
+    "http://localhost:3000",  # 不要加 /
     "https://sub.example.com",
     "http://localhost:8080",
     "http://127.0.0.1:9000",
 ]
-
 
 
 REST_FRAMEWORK = {
