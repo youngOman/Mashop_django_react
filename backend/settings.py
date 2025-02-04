@@ -82,7 +82,7 @@ WSGI_APPLICATION = 'backend.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'maShop',
+        'NAME': 'niceshop',
         'USER': 'www',
         'PASSWORD': 'Buty_2350973',
         'HOST': '192.168.1.101',
@@ -135,14 +135,13 @@ MEDIA_URL = '/images/'  # 圖片的網址，需要去urls.py新增pattern指定�
 # 放靜態文件的路徑，可指定多個
 # collectstatic = Django掃遍 STATICFILES_DIRS 裡的絕對路徑逐一蒐集到 STATIC_ROOT裡
 STATICFILES_DIRS = [
-    BASE_DIR / 'static',
-    BASE_DIR / 'frontend/build/static'
+    # BASE_DIR / 'static',
+    BASE_DIR / 'frontend/build/static' # React build 的靜態檔案
 ]
 
 # STATIC_ROOT = os.path.join(BASE_DIR, "") 
-
-MEDIA_ROOT = BASE_DIR / 'static/images'  # User 上傳檔案的目的地，沒有的話就會直接上傳在根目錄 backend/xxx.png
 STATIC_ROOT = BASE_DIR / 'staticfiles'  # 靜態檔案的目的地，collectstatic 會將靜態檔案複製到這裡
+MEDIA_ROOT = BASE_DIR / 'static/images'  # User 上傳檔案的目的地，沒有的話就會直接上傳在根目錄 backend/xxx.png
 
 
 # Default primary key field type
