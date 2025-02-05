@@ -1,13 +1,19 @@
 # See https://help.github.com/articles/ignoring-files/ for more about ignoring files.
 
-# Byte-compiled / optimized / DLL files
+# Python bytecode
+*.pyc
+*.pyo
 __pycache__/
-*.py[cod]
 
 # dependencies
 frontend/node_modules/
 /.pnp
 .pnp.js
+
+# Database
+*.sqlite3
+db.sqlite3
+instance/
 
 # testing
 /coverage
@@ -25,6 +31,13 @@ frontend/node_modules/
 # uwsgi cache
 niceshop.sock
 
+
+# npm / yarn / pnpm lock files (optional if using only one package manager)
+pnpm-lock.yaml
+package-lock.json
+yarn.lock
+
+# debugging logs
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
