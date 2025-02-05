@@ -31,7 +31,7 @@ def getProducts(request):
         page = 1
 
     page = int(page)
-    print("page:", page)
+    # print("page:", page)
 
     serializer = ProductSerializer(products, many=True)
     # return Response(serializer.data)
@@ -96,17 +96,19 @@ def createProduct(request):
 
 @api_view(['POST'])
 def uploadProductImage(request):
-    # print("進入 uploadProductImage 視圖函數")
+    print("進入 uploadProductImage 視圖函數")
     if 'product_image' not in request.FILES:
+        print("未接收到圖片檔案")
         return Response({'detail': '未接收到圖片檔案'}, status=400)
 
     data = request.data
     product_id = data['product_id']  # 取得產品 id
+    print(f"產品 ID: {product_id}")
     product = Product.objects.get(id=product_id)
     product.image = request.FILES.get('product_image')
-
-    # print("FILES:", request.FILES)
+    
     product.save()
+    print(f"圖片儲存成功: {product.image.url}")  # 檢查是否有正確存入
     return Response('圖片上傳成功！')
 
 # 用戶發表產品評論

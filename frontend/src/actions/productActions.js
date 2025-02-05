@@ -25,23 +25,37 @@ import {
 	PRODUCT_TOP_RATED_FAIL,
 } from "../constants/productsConstants";
 
-export const listProducts =
-	(keyword = "") =>
-	async (dispatch) => {
-		try {
-			dispatch({ type: PRODUCT_LIST_REQUEST });
-			const { data } = await axios.get(`/api/products/${keyword}`);
-			dispatch({
-				type: PRODUCT_LIST_SUCCESS,
-				payload: data, // reducers的action.payload
-			}); // 成功的話
-		} catch (error) {
-			dispatch({
-				type: PRODUCT_LIST_FAIL,
-				payload: error.response && error.response.data.message ? error.response.data.message : error.message,
-			}); // 檢查若 error.response && error.response.data.message 存在就回傳 error.response.data.message 否則就用預設的error.message
+export const listProducts = (keyword = "") => async (dispatch) => {
+	try {
+		dispatch({ type: PRODUCT_LIST_REQUEST });
+		const { data } = await axios.get(`/api/products/${keyword}`);
+		dispatch({
+			type: PRODUCT_LIST_SUCCESS,
+			payload: data, // reducers的action.payload
+		}); // 成功的話
+	} catch (error) {
+		let message = "取得產品資訊過程發生點問題...";
+		if (error.response && error.response.data.message) {
+			switch (error.response.status) {
+				case 404:
+					message = "找不到此產品？";
+					break;
+				case 502:
+					message = "伺服器目前無法處理請求，高速修復中！";
+					break;
+				default:
+					message = error.response.data.message;
+					break;
+			}
+		} else{
+			message = error.message;
 		}
-	};
+		dispatch({
+			type: PRODUCT_LIST_FAIL,
+			payload: message,
+		}); 
+	}
+};
 
 export const listProductDetail = (id) => async (dispatch) => {
 	try {
@@ -59,7 +73,7 @@ export const listProductDetail = (id) => async (dispatch) => {
 		dispatch({
 			type: PRODUCT_DETAIL_FAIL,
 			payload: error.response && error.response.data.message ? error.response.data.message : error.message,
-		}); // 檢查若 error.response && error.response.data.message 存在就回傳 error.response.data.message 否則就用預設的error.message
+		}); 
 	}
 };
 

@@ -6,6 +6,7 @@ import { Link } from 'react-router-dom';
 // 顯示在HomePage的產品樣式component
 
 const Product = ({product}) => {
+  // console.log("產品圖片路徑",product.image);
 
   return (
     <div>

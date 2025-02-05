@@ -17,7 +17,7 @@ const Paginate = ({ pages, page, keyword = "", isAdmin = false }) => {
 		navigate(`${isAdmin ? "/admin/productlist" : "/"}?keyword=${keyword}&page=${x}`);
 	};
 
-	console.log(Array(pages).keys());
+	// console.log(Array(pages).keys());
 	return (
 		<Pagination className="justify-content-center">
 			{[...Array(pages).keys()].map((x) => (

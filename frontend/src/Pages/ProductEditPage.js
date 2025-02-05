@@ -69,7 +69,7 @@ const ProductEditPage = () => {
 	}, [dispatch, product, productID, navigate, successUpdate]);
 
 	const uploadImageHandler = async (e) => {
-		// console.log(e.target.value);
+		console.log(e.target.value);
 		const file = e.target.files[0];
 
 		const formData = new FormData();

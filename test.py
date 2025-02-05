@@ -1,3 +1,5 @@
-def application(env, start_response):
-    start_response('200 OK', [('Content-Type','text/html')])
-    return [b"Hello AAAAAAAAAAAAA!"]
+def application(environ, start_response):
+    status = '200 OK'
+    headers = [('Content-Type', 'text/plain')]
+    start_response(status, headers)
+    return [b"Hello, Nginx is working!"]

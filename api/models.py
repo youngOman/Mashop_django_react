@@ -4,11 +4,11 @@ from django.contrib.auth.models import User
 
 class Product(models.Model):
     user = models.ForeignKey(User,on_delete=models.SET_NULL,null=True) # SET_NULL 當User被刪除，不要刪除此User新增的產品，null=True 產品可以是在沒有指定User的情況下產生
-    name = models.CharField(max_length=200,null=True,blank=True) # null=True 欄位可以是空值,blank=True 可以不填name
-    image = models.ImageField(null=True,blank=True,default='/placeholder.png') # blank=True 可以不填name
-    brand = models.CharField(max_length=200,null=True,blank=True) # blank=True 可以不填name
-    category = models.CharField(max_length=200,null=True,blank=True) # blank=True 可以不填name
-    description = models.TextField(max_length=200,null=True,blank=True) # blank=True 可以不填name
+    name = models.CharField(max_length=200,null=True,blank=True) # null=True 欄位可以是空值,blank=True 可以不填 name
+    image = models.ImageField(null=True,blank=True,upload_to='products/',default='products/placeholder.png')
+    brand = models.CharField(max_length=200,null=True,blank=True) # blank=True 可以不填
+    category = models.CharField(max_length=200,null=True,blank=True) # blank=True 可以不填
+    description = models.TextField(max_length=200,null=True,blank=True) # blank=True 可以不填
     rating = models.DecimalField(max_digits=7, decimal_places=2,null=True,blank=True)
     numReviews = models.IntegerField(null=True,blank=True,default=0) # 預設為0
     price = models.IntegerField(null=True,blank=True)

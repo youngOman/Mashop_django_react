@@ -14,7 +14,7 @@ SECRET_KEY = 'django-insecure-6p+713ni(4!^!f+vezvp8fp@ax)sa=vahc-bp4*09s^)(w)p^+
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ["niceshop.akebee.com", "127.0.0.1", "localhost"]
 
 
 # Application definition
@@ -45,6 +45,8 @@ MIDDLEWARE = [
     # Cors
     "corsheaders.middleware.CorsMiddleware",
 ]
+
+# CORS_ALLOW_ALL_ORIGINS=True
 
 ROOT_URLCONF = 'backend.urls'
 
@@ -130,7 +132,8 @@ USE_TZ = True
 # 靜態檔案也需要一組url，才得以在瀏覽器瀏覽
 # 在瀏覽器輸入http://127.0.0.1:8000/static/result.css，就可以看得到檔案內容。
 STATIC_URL = '/static/' # 靜態檔案的網址，需要去urls.py新增pattern指定此url
-MEDIA_URL = '/images/'  # 圖片的網址，需要去urls.py新增pattern指定此url
+# MEDIA_URL = '/images/'  # 圖片的網址，需要去urls.py新增pattern指定此url
+MEDIA_URL = '/media/'  # 圖片的網址，需要去urls.py新增pattern指定此url
 
 # 放靜態文件的路徑，可指定多個
 # collectstatic = Django掃遍 STATICFILES_DIRS 裡的絕對路徑逐一蒐集到 STATIC_ROOT裡
@@ -140,9 +143,9 @@ STATICFILES_DIRS = [
 ]
 
 # STATIC_ROOT = os.path.join(BASE_DIR, "") 
-STATIC_ROOT = BASE_DIR / 'staticfiles'  # 靜態檔案的目的地，collectstatic 會將靜態檔案複製到這裡
-MEDIA_ROOT = BASE_DIR / 'static/images'  # User 上傳檔案的目的地，沒有的話就會直接上傳在根目錄 backend/xxx.png
-
+STATIC_ROOT = BASE_DIR / 'staticfiles'  # 靜態檔案(CSS、JS、圖片)的資源存放處，collectstatic 會將靜態檔案複製到這裡
+# MEDIA_ROOT = BASE_DIR / 'static/images'  # 存放用戶上傳的檔案，沒有的話就會直接上傳在根目錄 backend/xxx.png
+MEDIA_ROOT = BASE_DIR / 'media'  # 存放用戶上傳的檔案，沒有的話就會直接上傳在根目錄 backend/xxx.png
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.1/ref/settings/#default-auto-field
