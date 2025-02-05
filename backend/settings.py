@@ -139,6 +139,7 @@ MEDIA_URL = '/media/'  # 圖片的網址，需要去urls.py新增pattern指定�
 # collectstatic = Django掃遍 STATICFILES_DIRS 裡的絕對路徑逐一蒐集到 STATIC_ROOT裡
 STATICFILES_DIRS = [
     # BASE_DIR / 'static',
+    BASE_DIR / 'frontend/build',  # React build 的靜態檔案
     BASE_DIR / 'frontend/build/static' # React build 的靜態檔案
 ]
 
