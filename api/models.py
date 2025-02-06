@@ -74,3 +74,11 @@ class ShippingAddress(models.Model):
         verbose_name_plural = 'ShippingAddress' # 指定複數顯示名稱
     def __str__(self):
         return str(self.address)
+
+# 用戶資料
+class UserProfile(models.Model):
+    user = models.OneToOneField(User, on_delete=models.CASCADE, null=True, blank=True) # # 當 User 被刪除，Profile 也一併刪除
+    avatar = models.ImageField(null=True, blank=True, upload_to='avatars/', default='avatars/default_avatar.png')
+
+    def __str__(self):
+        return str(self.name)

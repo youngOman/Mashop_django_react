@@ -118,14 +118,14 @@ const ProductEditPage = () => {
 							<Form.Control required type='number' placeholder='請輸入產品價格' value={price} onChange={(e) => setPrice(e.target.value)}></Form.Control>
 						</Form.Group>
 
-						{/* Form.File 已在 5.x 及以上版本 deprecated  */}
-						{/* <Form.File id='image-file' label='選擇產品圖片' custom onChange={uploadImageHandler}></Form.File> */}
+						{/* 產品圖片 */}
+						{ImageUploading && <Loader />}
 						<Form.Group controlId='image' className='mb-3'>
 							<Form.Label>產品圖片</Form.Label>
 							<Form.Control required type='text' placeholder='請輸入產品圖片' value={image} onChange={(e) => setImage(e.target.value)}></Form.Control>
 							<Form.Control type='file' onChange={uploadImageHandler} />
 						</Form.Group>
-						{ImageUploading && <Loader />}
+
 
 						<Form.Group controlId='brand' className='mb-3'>
 							<Form.Label>產品品牌</Form.Label>

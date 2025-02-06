@@ -1,17 +1,37 @@
 // cdnjs.com 找 font-awesome
-import React from "react";
-import { Container, Navbar, Nav, NavDropdown } from "react-bootstrap";
+import { React, useState, useEffect } from "react";
+import { Container, Navbar, Nav, NavDropdown, Image } from "react-bootstrap";
 import { LinkContainer } from "react-router-bootstrap";
 import { useDispatch, useSelector } from "react-redux";
 
 import { logout } from "../actions/userActions";
 import SearchBar from "./SearchBar";
+import { getUserDetails } from "../actions/userActions";
 
 const Header = () => {
 	const dispatch = useDispatch();
 
+	const [avatarPic, setAvatarPic] = useState("");
+
 	const userLogin = useSelector((state) => state.userLogin);
 	const { userInfo } = userLogin;
+
+	const userDetails = useSelector((state) => state.userDetails);
+	const {  user } = userDetails;
+
+	// 🚀 當 userInfo 變化時，自動更新 user 資料
+	useEffect(() => {
+		if (userInfo) {
+			dispatch(getUserDetails("profile"));
+		}
+	}, [dispatch, userInfo]);
+
+	// 🚀 當 userDetails 更新時，獲取 avatar
+	useEffect(() => {
+		if (user) {
+			setAvatarPic(user.avatar); // ✅ 確保讀取的是 `userprofile.avatar`
+		}
+	}, [user]);
 
 	const logoutHandler = () => {
 		dispatch(logout());
@@ -27,12 +47,15 @@ const Header = () => {
 				<Navbar.Collapse id='basic-navbar-nav'>
 					<Nav className='mr-auto'>
 						{userInfo ? (
-							<NavDropdown title={userInfo.first_name} id='username'>
-								<LinkContainer to='/profile'>
-									<NavDropdown.Item>個人資料</NavDropdown.Item>
-								</LinkContainer>
-								<NavDropdown.Item onClick={logoutHandler}>登出</NavDropdown.Item>
-							</NavDropdown>
+							<div className="d-flex align-items-center">
+								<Image src={ avatarPic || "/media/avatars/default_avatar.png"} roundedCircle style={{ width: "40px", height: "40px"}} />
+								<NavDropdown title={userInfo.first_name} id='username'>
+									<LinkContainer to='/profile'>
+										<NavDropdown.Item>個人資料</NavDropdown.Item>
+									</LinkContainer>
+									<NavDropdown.Item onClick={logoutHandler}>登出</NavDropdown.Item>
+								</NavDropdown>
+							</div>
 						) : (
 							<LinkContainer to='/login'>
 								<Nav.Link>

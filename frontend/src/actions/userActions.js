@@ -179,10 +179,9 @@ export const updateUserProfile = (user) => async (dispatch, getState) => {
       payload: data,
     });
     
-    // // 取得更新後的 token
+    // 取得更新後的 token
     // const updatedToken = data.token;
-
-    // // 更新使用者登入資訊，包括使用者資料和 token
+    // 更新使用者登入資訊，包括使用者資料和 token
     // dispatch({
     //   type: USER_LOGIN_SUCCESS,
     //   payload: {

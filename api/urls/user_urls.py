@@ -7,6 +7,7 @@ urlpatterns = [
     path('register/', views.registerUser, name='register'),
     path('profile/', views.getUserProfile, name='users_profile'),
     path('profile/update/', views.updateUserProfile, name='users_profile_update'),
+    path('profile/avatar/', views.updateAvatar, name='users_profile_avatar'),
     path('', views.getUsers, name='users'),
     # 非動態路由要寫在動態路由 <str:pk>/ 之前，django 匹配路徑時，是從上往下找，匹配完成其他路徑就不會再找
     # Admin

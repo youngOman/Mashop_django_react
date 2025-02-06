@@ -1,20 +1,44 @@
 from django.contrib.auth.models import User
-from .models import Product
 from rest_framework import serializers
 from rest_framework_simplejwt.tokens import RefreshToken
-from rest_framework.permissions import IsAuthenticated, IsAdminUser
-from .models import Product, Order, OrderItem, ShippingAddress, Review
-# 這個 class是負責產生 "登入" 的 token
+from .models import Product, Order, OrderItem, ShippingAddress, Review, UserProfile
 
+
+# 這個 class是負責產生 "登入" 的 token
+# class UserSerializer(serializers.ModelSerializer):
+#     first_name = serializers.SerializerMethodField(
+#         read_only=True)  # 這個欄位不會存到資料庫，只是用來顯示
+#     isAdmin = serializers.SerializerMethodField(read_only=True)
+
+#     class Meta:
+#         model = User
+#         fields = ['id', 'isAdmin', 'first_name', 'last_name', 'username', 'email']
+
+#     def get_isAdmin(self, obj):  # 取得 is_staff 值，包裝」成一個叫 isAdmin 的欄位，輸出到 API 的回應中，方便前端判斷
+#         return obj.is_staff
+
+#     def get_first_name(self, obj):  # 命名就是一定得 get_(跟欄位名稱一樣)
+#         first_name = obj.first_name
+#         if first_name == '':
+#             first_name = obj.email.split('@')[0]
+#         return first_name
 
 class UserSerializer(serializers.ModelSerializer):
     first_name = serializers.SerializerMethodField(
         read_only=True)  # 這個欄位不會存到資料庫，只是用來顯示
     isAdmin = serializers.SerializerMethodField(read_only=True)
-
+    avatar = serializers.SerializerMethodField(read_only=True)
     class Meta:
         model = User
-        fields = ['id', 'isAdmin', 'first_name', 'last_name', 'username', 'email']
+        fields = ['id', 'isAdmin', 'first_name', 'last_name', 'username', 'email', 'avatar']
+
+    def get_avatar(self, obj): # obj = User 的 instance
+        try:
+            if obj.userprofile.avatar:  # 確保 avatar 存在
+                return obj.userprofile.avatar.url
+        except AttributeError:
+            pass  # 若 userprofile 不存在，則直接返回預設值
+        return '/media/avatars/default_avatar.png'  # 預設頭像
 
     def get_isAdmin(self, obj):  # 取得 is_staff 值，包裝」成一個叫 isAdmin 的欄位，輸出到 API 的回應中，方便前端判斷
         return obj.is_staff
@@ -25,20 +49,23 @@ class UserSerializer(serializers.ModelSerializer):
             first_name = obj.email.split('@')[0]
         return first_name
 
-# 分兩個 class 寫，這個 class 是負責產生第一次 "註冊 "或 "重設密碼 "的新 token
 
-
-class UserSerializerWithToken(UserSerializer):  # 繼承 UserSerializer 就不用重複寫欄位
+class UserSerializerWithToken(UserSerializer):  # 繼承 UserSerializer 就不用重複寫欄位，分兩個 class 寫，這個 class 是負責產生第一次 "註冊 "或 "重設密碼 "的新 token
     token = serializers.SerializerMethodField(read_only=True)
 
     class Meta:
         model = User
-        fields = ['id', 'isAdmin', 'first_name',
-                  'last_name', 'username', 'email', 'token']
+        fields = ['id', 'isAdmin', 'first_name', 'last_name', 'username', 'email','avatar', 'token']
 
     def get_token(self, obj):  # 命名就是一定得 get_(跟欄位名稱一樣)
         token = RefreshToken.for_user(obj)  # 當使用者註冊或重設密碼，就會產生新的token
         return str(token.access_token)  # 因為token是物件，所以要轉成字串
+
+
+class UserProfileSerializer(serializers.ModelSerializer): # 用戶更換頭像
+    class Meta:
+        model = UserProfile
+        fields = ['avatar']
 
 
 class ReviewSerializer(serializers.ModelSerializer):
@@ -54,7 +81,7 @@ class ProductSerializer(serializers.ModelSerializer):
         model = Product
         fields = '__all__'
 
-    def get_reviews(self, obj): # get_+欄位名稱，是 DRF 固定寫法
+    def get_reviews(self, obj):  # get_+欄位名稱，是 DRF 固定寫法
         reviews = obj.review_set.all()
         serializer = ReviewSerializer(reviews, many=True)
         return serializer.data
