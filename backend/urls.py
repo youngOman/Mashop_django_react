@@ -8,7 +8,7 @@ from django.views.generic import TemplateView
 from django.http import JsonResponse
 
 urlpatterns = [
-    path('admin/', admin.site.urls),
+    path('django-admin/', admin.site.urls),
     path('', TemplateView.as_view(template_name='index.html')),  # 讓 React 的 index.html(原localhost:3000)靜態頁面能被 Django(localhost:8000) 載入
     path('api/', lambda request: JsonResponse({"message": "API is running"})),
     path('api/products/', include('api.urls.product_urls')),
