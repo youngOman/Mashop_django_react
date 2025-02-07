@@ -50,7 +50,7 @@ const RegisterPage = () => {
       {/* loading 是 action 的狀態 <Loadind /> 是寫好的 Component */}
       {loading && <Loader />}
 
-      <Form onSubmit={submitHandler}>
+      <Form onSubmit={submitHandler} className="my-2">
         <Form.Group controlId="first_name">
           <Form.Label>ID</Form.Label>
           <Form.Control
@@ -62,7 +62,7 @@ const RegisterPage = () => {
           ></Form.Control>
         </Form.Group>
 
-        <Form.Group controlId="email">
+        <Form.Group controlId="email" className="my-2">
           <Form.Label>電子郵件</Form.Label>
           <Form.Control
             required
@@ -74,7 +74,7 @@ const RegisterPage = () => {
           ></Form.Control>
         </Form.Group>
 
-        <Form.Group controlId="password">
+        <Form.Group controlId="password" className="my-2">
           <Form.Label>密碼</Form.Label>
           <Form.Control
             required
@@ -86,7 +86,7 @@ const RegisterPage = () => {
           ></Form.Control>
         </Form.Group>
 
-        <Form.Group controlId="passwordConfirm">
+        <Form.Group controlId="passwordConfirm" className="my-2">
           <Form.Label>確認密碼</Form.Label>
           <Form.Control
             required

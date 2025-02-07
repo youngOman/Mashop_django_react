@@ -18,7 +18,7 @@ const ProfilePage = () => {
 	const [password, setPassword] = useState("");
 	const [confirmPassword, setConfirmPassword] = useState("");
 	const [message, setMessage] = useState({ text: "", variant: "" });
-
+	
 	const [avatarPic, setAvatarPic] = useState("");
 	const [preview, setPreview] = useState("");
 	const [profilePicUploading, setProfilePicUploading] = useState(false);
@@ -49,8 +49,8 @@ const ProfilePage = () => {
 		} else {
 			if (!user || !user.first_name || success || userInfo.id !== user.id) { // 若目前用戶的 id(userInfo.id) 與取得指定用戶的 id(user.id) 不同，就重新發送獲取用戶資料的請求
 				dispatch({ type: USER_UPDATE_PROFILE_RESET }); // 若更新成功就重置 userUpdateProfile 的狀態
+				dispatch(listMyOrders()); // 獲取此用戶的歷史訂單
 				dispatch(getUserDetails("profile"));
-				dispatch(listMyOrders());
 			} else { // 否則設置用戶資料
 				setFirst_name(user.first_name);
 				setEmail(user.email);
@@ -77,7 +77,7 @@ const ProfilePage = () => {
 		}
 	};
 
-	// 選擇新圖片時觸發
+	// 選擇新圖片時即觸發
 	const handleFileChange = (e) => {
 		const file = e.target.files[0];
 		if (file) {
@@ -87,8 +87,9 @@ const ProfilePage = () => {
 	};
 	// 上傳新頭像
 	const updateAvatar = async (file) => {
-		if (!avatarPic) {
-			alert("請選擇圖片");
+
+		if (!preview) {
+			setMessage({ text: "請選擇檔案！沒檔案就不要按了==", variant: "danger" });
 			return;
 		}
 
@@ -113,8 +114,8 @@ const ProfilePage = () => {
 		}
 	};
 
-	console.log("Preview：",preview);
-	console.log("AvatarPic：",avatarPic);
+	// console.log("Preview：",preview);
+	// console.log("AvatarPic：",avatarPic);
 
 	return (
 		<Row>

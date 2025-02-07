@@ -4,25 +4,6 @@ from rest_framework_simplejwt.tokens import RefreshToken
 from .models import Product, Order, OrderItem, ShippingAddress, Review, UserProfile
 
 
-# 這個 class是負責產生 "登入" 的 token
-# class UserSerializer(serializers.ModelSerializer):
-#     first_name = serializers.SerializerMethodField(
-#         read_only=True)  # 這個欄位不會存到資料庫，只是用來顯示
-#     isAdmin = serializers.SerializerMethodField(read_only=True)
-
-#     class Meta:
-#         model = User
-#         fields = ['id', 'isAdmin', 'first_name', 'last_name', 'username', 'email']
-
-#     def get_isAdmin(self, obj):  # 取得 is_staff 值，包裝」成一個叫 isAdmin 的欄位，輸出到 API 的回應中，方便前端判斷
-#         return obj.is_staff
-
-#     def get_first_name(self, obj):  # 命名就是一定得 get_(跟欄位名稱一樣)
-#         first_name = obj.first_name
-#         if first_name == '':
-#             first_name = obj.email.split('@')[0]
-#         return first_name
-
 class UserSerializer(serializers.ModelSerializer):
     first_name = serializers.SerializerMethodField(
         read_only=True)  # 這個欄位不會存到資料庫，只是用來顯示

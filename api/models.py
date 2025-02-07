@@ -81,4 +81,4 @@ class UserProfile(models.Model):
     avatar = models.ImageField(null=True, blank=True, upload_to='avatars/', default='avatars/default_avatar.png')
 
     def __str__(self):
-        return str(self.name)
+        return str(self.user.username) # 顯示使用者名稱

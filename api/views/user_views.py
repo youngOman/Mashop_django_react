@@ -14,7 +14,6 @@ from django.contrib.auth.hashers import make_password  # 加密密碼
 from django.contrib.auth.models import AnonymousUser
 
 
-
 @api_view(['POST'])
 def registerUser(requset):
     data = requset.data
@@ -47,11 +46,11 @@ class MytokenObtainPairView(TokenObtainPairView):
     serializer_class = MyTokenObtainPairSerializer
 
 
-@api_view(['PUT']) # 更新用戶自己的 profile
-@permission_classes([IsAuthenticated]) # 只有登入的人才能 access
+@api_view(['PUT'])  # 更新用戶自己的 profile
+@permission_classes([IsAuthenticated])  # 只有登入的人才能 access
 def updateUserProfile(request):
     user = request.user
-    serializer = UserSerializerWithToken(user,many=False) # 記得這邊要用 UserSerializerWithToken 而不是 UserSerializer，因為要產生新的token
+    serializer = UserSerializerWithToken(user, many=False)  # 記得這邊要用 UserSerializerWithToken 而不是 UserSerializer，因為要產生新的token
 
     data = request.data
 
@@ -66,12 +65,10 @@ def updateUserProfile(request):
     return Response(serializer.data)
 
 
-
-
-
 @api_view(['POST'])
 # @permission_classes([IsAuthenticated])
 def updateAvatar(request):
+
     # 檢查是否為匿名使用者
     if isinstance(request.user, AnonymousUser):
         return Response({"error": "未登入的使用者"}, status=401)
@@ -91,18 +88,17 @@ def updateAvatar(request):
     return Response(serializer.errors, status=400)
 
 
-
-
-
-
-
 @api_view(['GET'])  # 取得用戶自己的 profile
 @permission_classes([IsAuthenticated])  # 登入的人才能 access
 def getUserProfile(request):
     user = request.user  # 提供已登入的用戶資料
-    serializer = UserSerializer(user, many=False)
-    return Response(serializer.data)
+    # print(request.user.userprofile.avatar)  # 取得頭像的 url
+    # print(user.__dict__) # 查看 user 所有數據(超級多)
+    # print(dir(user)) # 列出 User 物件的所有屬性和方法
 
+    serializer = UserSerializer(user, many=False)
+
+    return Response(serializer.data)
 
 
 # ============= Admin ================
