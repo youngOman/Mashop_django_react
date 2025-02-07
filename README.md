@@ -19,6 +19,11 @@
 - **JWT (JSON Web Token)**：身份驗證和授權數據，適用於無狀態 API 身份驗證
 - **MySQL**：高效能且適用於正式環境的關聯式資料庫，而非開發階段用的 SQLite
 
+此專案的 ER Model：
+
+![image](https://github.com/youngOman/niceshop_django_react/blob/main/static/images/drawSQL.png)
+
+
 ### (Package Manager)套件管理工具：
 
 - **npm**：Node.js 的套件管理工具，用於安裝 React 相關套件
