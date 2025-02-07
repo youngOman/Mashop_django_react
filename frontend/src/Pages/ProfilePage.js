@@ -18,7 +18,7 @@ const ProfilePage = () => {
 	const [password, setPassword] = useState("");
 	const [confirmPassword, setConfirmPassword] = useState("");
 	const [message, setMessage] = useState({ text: "", variant: "" });
-	
+
 	const [avatarPic, setAvatarPic] = useState("");
 	const [preview, setPreview] = useState("");
 	const [profilePicUploading, setProfilePicUploading] = useState(false);
@@ -39,26 +39,25 @@ const ProfilePage = () => {
 
 	const orderListMy = useSelector((state) => state.orderListMy);
 	const { loading: loadingOrders, error: errorOrders, orders } = orderListMy;
-
 	// console.log(orders);
 
 	useEffect(() => {
 		if (!userInfo) {
-			// 如果沒有登入就跳轉到登入頁面
-			navigate("/login");
+			navigate("/login"); // 如果沒有登入就跳轉到登入頁面
 		} else {
-			if (!user || !user.first_name || success || userInfo.id !== user.id) { // 若目前用戶的 id(userInfo.id) 與取得指定用戶的 id(user.id) 不同，就重新發送獲取用戶資料的請求
+			dispatch(listMyOrders()); // 獲取此用戶的歷史訂單
+			if (!user.first_name || success || userInfo.id !== user.id) {
+				// 若目前用戶的 id(userInfo.id) 與取得指定用戶的 id(user.id) 不同，就重新發送獲取用戶資料的請求
 				dispatch({ type: USER_UPDATE_PROFILE_RESET }); // 若更新成功就重置 userUpdateProfile 的狀態
-				dispatch(listMyOrders()); // 獲取此用戶的歷史訂單
 				dispatch(getUserDetails("profile"));
-			} else { // 否則設置用戶資料
+			} else {
+				// 否則設置用戶資料
 				setFirst_name(user.first_name);
 				setEmail(user.email);
 				setAvatarPic(user.avatar);
 			}
 		}
 	}, [dispatch, navigate, userInfo, user, success]);
-	// console.log("目前用戶資料", user);
 
 	const submitHandler = (e) => {
 		e.preventDefault();
@@ -87,7 +86,6 @@ const ProfilePage = () => {
 	};
 	// 上傳新頭像
 	const updateAvatar = async (file) => {
-
 		if (!preview) {
 			setMessage({ text: "請選擇檔案！沒檔案就不要按了==", variant: "danger" });
 			return;
@@ -120,7 +118,7 @@ const ProfilePage = () => {
 	return (
 		<Row>
 			<Col md={3}>
-				<h2 className="mb-3">我的檔案</h2>
+				<h2 className='mb-3'>我的檔案</h2>
 				{message?.text && <Message variant={message.variant}>{message.text}</Message>}
 				{error && <Message variant='danger'>{error}</Message>}
 				{loading && <Loader />} {/* loading 是 action 的狀態、<Loader /> 是寫好的 Component */}
@@ -130,7 +128,7 @@ const ProfilePage = () => {
 					<Form.Group controlId='profilePic' className='m-3'>
 						<Form.Label>個人照片</Form.Label>
 						<div className='d-col align-items-center'>
-							<Image src={preview || avatarPic || "/media/avatars/default_avatar.png"} roundedCircle className="mb-2" style={{ width: "100px", height: "100px", objectFit: "cover", marginRight: "10px" }} />
+							<Image src={preview || avatarPic || "/media/avatars/default_avatar.png"} roundedCircle className='mb-2' style={{ width: "100px", height: "100px", objectFit: "cover", marginRight: "10px" }} />
 							<Form.Control type='file' accept='image/*' onChange={handleFileChange} disabled={profilePicUploading} />
 						</div>
 						<Button className='mt-2' onClick={updateAvatar} disabled={profilePicUploading}>
@@ -139,7 +137,6 @@ const ProfilePage = () => {
 						{profilePicUploading && <Loader />}
 					</Form.Group>
 
-					
 					<Form.Group controlId='first_name' className='m-3'>
 						<Form.Label>ID</Form.Label>
 						<Form.Control required type='name' placeholder='請輸入您的ID' value={first_name} onChange={(e) => setFirst_name(e.target.value)}></Form.Control>

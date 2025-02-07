@@ -2,13 +2,15 @@
 
 本專案為練習用電商平台 Demo，包含 **會員系統、購物功能、訂單管理、後台管理**... 等多項核心功能
 
+開發此專案的完整詳細流程 > ：[Django + React 電商網站專案實作教學](https://akebee.com/tags/#Django)
+
 ## 📌 Tech Stack(技術棧)
 
 ### (Frontend)前端：
 
 - **React**：一個 JavaScript UI 函式庫，適用於開發單頁應用（SPA），提供組件化開發模式
 - **Redux**：集中化狀態管理工具，適用於處理複雜的應用狀態，經常搭配 React 進行開發
-- **React-Bootstrap**：基於 Bootstrap 的 React UI 框架，提供即用型元件，提高 RWD 網頁開發效率
+- **React-Bootstrap**：基於 Bootstrap 的 React UI 框架，提供即用型元件，提高 RWD 網頁開發效
 
 ### (Backend)後端：
 
