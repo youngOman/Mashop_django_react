@@ -2,6 +2,8 @@
 
 本專案為練習用電商平台 Demo，包含 **會員系統、購物功能、訂單管理、後台管理**... 等多項核心功能
 
+![image](https://github.com/youngOman/niceshop_django_react/blob/main/static/images/home_page.png)
+
 開發此專案的完整詳細流程 > ：[Django + React 電商網站專案實作教學](https://akebee.com/tags/#Django)
 
 ## 📌 Tech Stack(技術棧)
@@ -41,9 +43,15 @@
 
 - [x] 會員註冊 / 登入(JWT 驗證)
 - [x] 產品列表、產品詳細介紹頁面
+ ![image](https://github.com/youngOman/niceshop_django_react/blob/main/static/images/product_detail_page.png)
+
 - [x] 購物車功能
+![image](https://github.com/youngOman/niceshop_django_react/blob/main/static/images/cart_page.png)
+
 - [x] 結帳下單，付款流程完整功能(包含自動儲存用戶上次付款時資訊)
+![image](https://github.com/youngOman/niceshop_django_react/blob/main/static/images/order_page.png)
 - [x] 會員歷史訂單列表(含下單日期、訂單金額、付款狀態、出貨狀態..等)
+![image](https://github.com/youngOman/niceshop_django_react/blob/main/static/images/profile_page.png)
 - [x] 產品評論與評分功能(包含用戶評分即時計算評價)
 - [x] 產品搜尋功能
 - [x] 自動篩選高評價產品的輪播器(Carousel)
@@ -54,6 +62,7 @@
 ### 🔧 後台功能：
 
 - [x] **產品資訊、價格、庫存、評價、規格管理**（CRUD）
+![image](https://github.com/youngOman/niceshop_django_react/blob/main/static/images/productList_page.png)
 - [x] **網站訂單管理**（CRUD + 訂單運送狀態更新）
 - [x] **會員管理**（CRUD + 會員資料、管理員權限設定）
 
