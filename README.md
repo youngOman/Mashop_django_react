@@ -2,8 +2,6 @@
 
 本專案為練習用電商平台 Demo，包含 **會員系統、購物功能、訂單管理、後台管理**... 等多項核心功能
 
-![image](https://github.com/youngOman/niceshop_django_react/blob/main/static/images/home_page.png)
-
 開發此專案的完整詳細流程 > ：[Django + React 電商網站專案實作教學](https://akebee.com/tags/#Django)
 
 ## 📌 Tech Stack(技術棧)
