@@ -15,7 +15,7 @@ def getProducts(request):
     if query is None:
         query = ''
 
-    products = Product.objects.filter(name__icontains=query)
+    products = Product.objects.filter(name__icontains=query).order_by('id')
 
     page = request.query_params.get('page')  # 從網址取得 page 參數
     paginator = Paginator(products, 4)  # 每頁顯示 2 個產品
